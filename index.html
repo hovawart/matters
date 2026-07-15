@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Harbor Sessions — Free counseling, supervised care</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    /* ---- Design tokens ---- */
+    --bg:            #F5F7FA;
+    --bg-alt:        #EAEFF4;
+    --bg-deep:       #223142;
+    --primary:       #2F4C6B;
+    --primary-dark:  #1F3247;
+    --primary-tint:  #DCE6EF;
+    --accent-warm:   #E2915C;
+    --accent-warm-tint: #FBE6D6;
+    --sage:          #7CA592;
+    --sage-tint:     #E3EEE8;
+    --text:          #223142;
+    --text-muted:    #5B6B7C;
+    --border:        #DAE2E9;
+    --white:         #FFFFFF;
+
+    --font-display: "Fraunces", serif;
+    --font-body: "Figtree", -apple-system, BlinkMacSystemFont, sans-serif;
+
+    --radius-sm: 8px;
+    --radius-md: 14px;
+    --radius-lg: 22px;
+
+    --container: 1120px;
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+  body{
+    font-family: var(--font-body);
+    color: var(--text);
+    background: var(--bg);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  img,svg{ display:block; max-width:100%; }
+  a{ color: inherit; }
+  ul{ list-style:none; }
+  button{ font-family: inherit; cursor:pointer; }
+
+  :focus-visible{
+    outline: 3px solid var(--accent-warm);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  .wrap{
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: 0 28px;
+  }
+
+  h1,h2,h3{
+    font-family: var(--font-display);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: var(--primary-dark);
+  }
+
+  .eyebrow{
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 0.78rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent-warm);
+  }
+
+  /* ---------------- Header ---------------- */
+  header{
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    background: rgba(245,247,250,0.88);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding: 18px 28px;
+    max-width: var(--container);
+    margin: 0 auto;
+  }
+  .logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--primary-dark);
+    text-decoration:none;
+  }
+  .logo-mark{ width: 26px; height: 26px; }
+  .nav-links{
+    display:flex;
+    gap: 32px;
+    font-size: 0.95rem;
+    font-weight: 500;
+  }
+  .nav-links a{
+    text-decoration:none;
+    color: var(--text-muted);
+    transition: color .15s ease;
+  }
+  .nav-links a:hover{ color: var(--primary); }
+  .nav-cta{
+    display:flex;
+    gap:12px;
+    align-items:center;
+  }
+  .nav-toggle{
+    display:none;
+    background:none;
+    border:none;
+    padding: 8px;
+  }
+  .nav-toggle span{
+    display:block;
+    width:22px; height:2px;
+    background: var(--primary-dark);
+    margin: 5px 0;
+  }
+
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    padding: 12px 22px;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration:none;
+    border: 1.5px solid transparent;
+    transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+    white-space: nowrap;
+  }
+  .btn-primary{
+    background: var(--primary);
+    color: var(--white);
+  }
+  .btn-primary:hover{
+    background: var(--primary-dark);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(47,76,107,0.25);
+  }
+  .btn-ghost{
+    background: transparent;
+    color: var(--primary);
+    border-color: var(--primary-tint);
+  }
+  .btn-ghost:hover{
+    background: var(--primary-tint);
+  }
+  .btn-small{ padding: 9px 16px; font-size: 0.85rem; }
+
+  /* ---------------- Crisis banner ---------------- */
+  .crisis-bar{
+    background: var(--primary-dark);
+    color: #DDE6EE;
+    font-size: 0.85rem;
+    text-align: center;
+    padding: 9px 20px;
+  }
+  .crisis-bar a{
+    color: var(--accent-warm);
+    font-weight: 600;
+    text-decoration: underline;
+  }
+
+  /* ---------------- Hero ---------------- */
+  .hero{
+    padding: 88px 0 70px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero .wrap{
+    display:grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 56px;
+    align-items:center;
+  }
+  .hero h1{
+    font-size: clamp(2.4rem, 4.2vw, 3.6rem);
+    line-height: 1.08;
+    margin: 18px 0 22px;
+  }
+  .hero h1 em{
+    font-style: italic;
+    color: var(--accent-warm);
+  }
+  .hero p.lede{
+    font-size: 1.15rem;
+    color: var(--text-muted);
+    max-width: 46ch;
+    margin-bottom: 32px;
+  }
+  .hero-actions{
+    display:flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-bottom: 28px;
+  }
+  .hero-meta{
+    display:flex;
+    gap: 26px;
+    flex-wrap: wrap;
+    font-size: 0.88rem;
+    color: var(--text-muted);
+  }
+  .hero-meta strong{ color: var(--primary-dark); }
+
+  .hero-visual{
+    background: linear-gradient(160deg, var(--primary) 0%, var(--primary-dark) 100%);
+    border-radius: var(--radius-lg);
+    padding: 44px 34px;
+    color: var(--white);
+    position: relative;
+    min-height: 380px;
+    display:flex;
+    flex-direction:column;
+    justify-content: space-between;
+  }
+  .hero-visual .tag{
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0.75;
+    margin-bottom: 6px;
+  }
+  .hero-visual .quote{
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    line-height: 1.4;
+    font-weight: 400;
+  }
+  .wave-wrap{
+    margin: 26px 0;
+    background: rgba(255,255,255,0.08);
+    border-radius: var(--radius-md);
+    padding: 18px 16px 8px;
+  }
+  .wave-wrap svg{ width: 100%; height: 64px; }
+  .wave-path{
+    stroke: var(--accent-warm);
+    stroke-width: 2.5;
+    fill: none;
+    stroke-linecap: round;
+  }
+  .wave-caption{
+    font-size: 0.78rem;
+    opacity: 0.7;
+    margin-top: 6px;
+  }
+
+  /* ---------------- Section shells ---------------- */
+  section{ padding: 84px 0; }
+  .section-alt{ background: var(--bg-alt); }
+  .section-head{
+    max-width: 620px;
+    margin-bottom: 48px;
+  }
+  .section-head h2{
+    font-size: clamp(1.7rem, 2.6vw, 2.3rem);
+    margin-top: 10px;
+  }
+  .section-head p{
+    color: var(--text-muted);
+    font-size: 1.05rem;
+    margin-top: 14px;
+  }
+
+  /* ---------------- How it works ---------------- */
+  .steps{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+  }
+  .step{
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 30px 26px;
+    position: relative;
+  }
+  .step-num{
+    font-family: var(--font-display);
+    font-size: 2.4rem;
+    color: var(--primary-tint);
+    font-weight: 500;
+    line-height: 1;
+    margin-bottom: 18px;
+  }
+  .step h3{
+    font-size: 1.15rem;
+    margin-bottom: 10px;
+  }
+  .step p{
+    color: var(--text-muted);
+    font-size: 0.96rem;
+  }
+  .step-connector{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color: var(--border);
+  }
+
+  /* ---------------- Audience split ---------------- */
+  .split{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+  }
+  .audience-card{
+    border-radius: var(--radius-lg);
+    padding: 38px 34px;
+    display:flex;
+    flex-direction:column;
+    min-height: 320px;
+  }
+  .audience-card.patients{
+    background: var(--sage-tint);
+    border: 1px solid #CFE2D8;
+  }
+  .audience-card.volunteers{
+    background: var(--accent-warm-tint);
+    border: 1px solid #F1CCA6;
+  }
+  .audience-card .icon-badge{
+    width: 46px; height: 46px;
+    border-radius: 50%;
+    display:flex; align-items:center; justify-content:center;
+    margin-bottom: 20px;
+  }
+  .audience-card.patients .icon-badge{ background: var(--sage); }
+  .audience-card.volunteers .icon-badge{ background: var(--accent-warm); }
+  .audience-card h3{
+    font-size: 1.4rem;
+    margin-bottom: 12px;
+  }
+  .audience-card p{
+    color: var(--text-muted);
+    margin-bottom: 22px;
+    flex-grow: 1;
+  }
+  .audience-card ul{
+    margin-bottom: 24px;
+  }
+  .audience-card li{
+    font-size: 0.92rem;
+    color: var(--text);
+    padding-left: 22px;
+    position: relative;
+    margin-bottom: 9px;
+  }
+  .audience-card li::before{
+    content: "";
+    position: absolute;
+    left: 0; top: 7px;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+  }
+  .audience-card.patients li::before{ background: var(--sage); }
+  .audience-card.volunteers li::before{ background: var(--accent-warm); }
+
+  /* ---------------- Safety / supervision ---------------- */
+  .safety{
+    display:grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 56px;
+    align-items:center;
+  }
+  .safety-visual{
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 32px;
+  }
+  .safety-row{
+    display:flex;
+    gap: 16px;
+    align-items:flex-start;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .safety-row:last-child{ border-bottom:none; }
+  .safety-dot{
+    width: 10px; height:10px;
+    border-radius:50%;
+    background: var(--sage);
+    margin-top: 6px;
+    flex-shrink:0;
+  }
+  .safety-row strong{
+    display:block;
+    font-size: 0.98rem;
+    color: var(--primary-dark);
+    margin-bottom: 3px;
+  }
+  .safety-row span{
+    font-size: 0.88rem;
+    color: var(--text-muted);
+  }
+  .safety-copy .section-head{ margin-bottom: 26px; }
+
+  /* ---------------- Quote ---------------- */
+  .quote-block{
+    text-align:center;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .quote-block p{
+    font-family: var(--font-display);
+    font-size: clamp(1.4rem, 2.4vw, 1.9rem);
+    line-height: 1.45;
+    color: var(--primary-dark);
+    font-weight: 400;
+  }
+  .quote-block cite{
+    display:block;
+    margin-top: 22px;
+    font-style: normal;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+  }
+
+  /* ---------------- FAQ ---------------- */
+  .faq-list{ max-width: 760px; }
+  .faq-item{
+    border-bottom: 1px solid var(--border);
+  }
+  .faq-q{
+    width:100%;
+    background:none;
+    border:none;
+    text-align:left;
+    padding: 22px 4px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-size: 1.02rem;
+    font-weight: 600;
+    color: var(--primary-dark);
+  }
+  .faq-q .plus{
+    font-size: 1.4rem;
+    color: var(--accent-warm);
+    transition: transform .2s ease;
+    flex-shrink:0;
+    margin-left: 20px;
+  }
+  .faq-item.open .faq-q .plus{ transform: rotate(45deg); }
+  .faq-a{
+    max-height:0;
+    overflow:hidden;
+    transition: max-height .25s ease;
+  }
+  .faq-a p{
+    padding: 0 4px 22px;
+    color: var(--text-muted);
+    font-size: 0.96rem;
+    max-width: 62ch;
+  }
+
+  /* ---------------- Final CTA ---------------- */
+  .final-cta{
+    background: linear-gradient(160deg, var(--primary) 0%, var(--primary-dark) 100%);
+    border-radius: var(--radius-lg);
+    padding: 64px 48px;
+    text-align:center;
+    color: var(--white);
+  }
+  .final-cta h2{
+    color: var(--white);
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    margin-bottom: 16px;
+  }
+  .final-cta p{
+    color: #C9D7E4;
+    max-width: 46ch;
+    margin: 0 auto 30px;
+  }
+  .final-cta .hero-actions{ justify-content:center; margin-bottom:0; }
+  .final-cta .btn-ghost{
+    color: var(--white);
+    border-color: rgba(255,255,255,0.35);
+  }
+  .final-cta .btn-ghost:hover{ background: rgba(255,255,255,0.1); }
+
+  /* ---------------- Footer ---------------- */
+  footer{
+    background: var(--bg-deep);
+    color: #AEBBC8;
+    padding: 56px 0 28px;
+    font-size: 0.9rem;
+  }
+  .footer-grid{
+    display:grid;
+    grid-template-columns: 1.4fr 1fr 1fr;
+    gap: 40px;
+    padding-bottom: 36px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .footer-grid h4{
+    color: var(--white);
+    font-size: 0.85rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    font-family: var(--font-body);
+  }
+  .footer-grid li{ margin-bottom: 10px; }
+  .footer-grid a{ text-decoration:none; color: #AEBBC8; }
+  .footer-grid a:hover{ color: var(--white); }
+  .footer-logo{
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    color: var(--white);
+    margin-bottom: 12px;
+  }
+  .footer-bottom{
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap: 12px;
+    padding-top: 24px;
+    font-size: 0.82rem;
+  }
+
+  /* ---------------- Responsive ---------------- */
+  @media (max-width: 900px){
+    .hero .wrap{ grid-template-columns: 1fr; }
+    .hero-visual{ order:-1; }
+    .steps{ grid-template-columns: 1fr; }
+    .split{ grid-template-columns: 1fr; }
+    .safety{ grid-template-columns: 1fr; }
+    .footer-grid{ grid-template-columns: 1fr; gap: 28px; }
+    .nav-links{ display:none; }
+    .nav-toggle{ display:block; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    .wave-path{ animation:none !important; }
+    *{ transition:none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="crisis-bar">
+  If you're in crisis or in danger right now, this site isn't the right place — call or text <a href="tel:988">988</a> (US) or your local emergency number.
+</div>
+
+<header>
+  <nav class="nav">
+    <a href="#top" class="logo">
+      <svg class="logo-mark" viewBox="0 0 26 26" fill="none">
+        <circle cx="13" cy="13" r="12" stroke="#2F4C6B" stroke-width="1.6"/>
+        <path d="M7 13c1.5-3 3-3 4 0s2.5 3 4 0 3-3 4 0" stroke="#E2915C" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+      </svg>
+      Harbor Sessions
+    </a>
+    <ul class="nav-links">
+      <li><a href="#how">How it works</a></li>
+      <li><a href="#audiences">Get involved</a></li>
+      <li><a href="#safety">Safety &amp; supervision</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="#request" class="btn btn-primary btn-small">Request support</a>
+    </div>
+    <button class="nav-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+  </nav>
+</header>
+
+<main id="top">
+
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-copy">
+        <span class="eyebrow">Free, supervised counseling</span>
+        <h1>Someone to talk to, <em>trained to help</em>, at no cost.</h1>
+        <p class="lede">Harbor Sessions connects people who need support with social work and psychology students — every one of them supervised by a licensed mentor, every session confidential.</p>
+        <div class="hero-actions">
+          <a href="#request" class="btn btn-primary">Request a session</a>
+          <a href="#volunteer" class="btn btn-ghost">Volunteer as a student</a>
+        </div>
+        <div class="hero-meta">
+          <span><strong>100%</strong> free, always</span>
+          <span><strong>Licensed</strong> mentor on every case</span>
+          <span><strong>Confidential</strong> by default</span>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div>
+          <p class="tag">What supervision sounds like</p>
+          <p class="quote">"My mentor and I review every session together — nothing a volunteer handles goes unchecked."</p>
+        </div>
+        <div class="wave-wrap">
+          <svg viewBox="0 0 400 64" preserveAspectRatio="none">
+            <path class="wave-path" id="calmWave" d="M0,32 C20,8 40,56 60,32 C80,8 100,56 120,32 C150,12 170,52 200,32 C230,18 260,46 290,32 C320,24 350,40 400,32" />
+          </svg>
+          <p class="wave-caption">A session, start to finish — most people say the tension eases by the third exchange.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="how" class="section-alt">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">The process</span>
+        <h2>From reaching out to your first session</h2>
+        <p>Three steps, usually under a week. No forms longer than a page, no waitlist you can't see the end of.</p>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">01</div>
+          <h3>Tell us what you're looking for</h3>
+          <p>A short, private form — what's going on, what you'd find helpful, and when you're generally free. Takes about five minutes.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">02</div>
+          <h3>We match you with a supervised volunteer</h3>
+          <p>A student counselor is paired to your situation by our clinical team, with a licensed mentor assigned to oversee the case from day one.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">03</div>
+          <h3>Begin free, regular sessions</h3>
+          <p>Meet weekly or biweekly, in person or by video. Your volunteer debriefs every session with their mentor to keep your care on track.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="audiences">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Two ways in</span>
+        <h2>Whether you're seeking support or ready to give it</h2>
+      </div>
+      <div class="split">
+        <div class="audience-card patients" id="request">
+          <div class="icon-badge">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 21s-7-4.5-9.5-9C.5 8 3 4 7 4c2 0 4 1.2 5 3 1-1.8 3-3 5-3 4 0 6.5 4 4.5 8-2.5 4.5-9.5 9-9.5 9z" stroke="#fff" stroke-width="1.6"/></svg>
+          </div>
+          <h3>Looking for support</h3>
+          <p>If you're carrying something heavy and want a consistent, judgment-free space to work through it — this is what we built.</p>
+          <ul>
+            <li>Free for as long as you need it</li>
+            <li>Matched within about a week</li>
+            <li>Every volunteer supervised by a mentor</li>
+            <li>You can pause or stop anytime</li>
+          </ul>
+          <a href="#" class="btn btn-primary btn-small">Request a session</a>
+        </div>
+        <div class="audience-card volunteers" id="volunteer">
+          <div class="icon-badge">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 4v16m-8-8h16" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg>
+          </div>
+          <h3>Studying social work or psych?</h3>
+          <p>Get real, supervised clinical hours while genuinely helping someone — not shadowing, not observing, actually facilitating sessions with a mentor backing you up.</p>
+          <ul>
+            <li>Open to current MSW &amp; psych grad students</li>
+            <li>Weekly supervision, not occasional check-ins</li>
+            <li>Hours count toward practicum where eligible</li>
+            <li>Small caseload — quality over volume</li>
+          </ul>
+          <a href="#" class="btn btn-primary btn-small">Apply to volunteer</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="safety" class="section-alt">
+    <div class="wrap safety">
+      <div class="safety-copy">
+        <div class="section-head">
+          <span class="eyebrow">Why it's safe</span>
+          <h2>Every case has a licensed mentor attached to it</h2>
+          <p>Volunteers aren't left to figure it out alone. Here's what oversight actually looks like, case by case.</p>
+        </div>
+      </div>
+      <div class="safety-visual">
+        <div class="safety-row">
+          <div class="safety-dot"></div>
+          <div>
+            <strong>Mentors are licensed clinicians</strong>
+            <span>LCSWs and licensed psychologists review every case before it opens and stay attached to it throughout.</span>
+          </div>
+        </div>
+        <div class="safety-row">
+          <div class="safety-dot"></div>
+          <div>
+            <strong>Weekly session debriefs, mandatory</strong>
+            <span>Volunteers walk their mentor through each session — what came up, what they said, what they'd do differently.</span>
+          </div>
+        </div>
+        <div class="safety-row">
+          <div class="safety-dot"></div>
+          <div>
+            <strong>A mentor is always reachable</strong>
+            <span>If something urgent comes up mid-session, volunteers have a direct line to their mentor — same day, no exceptions.</span>
+          </div>
+        </div>
+        <div class="safety-row">
+          <div class="safety-dot"></div>
+          <div>
+            <strong>Confidentiality, with clear limits stated upfront</strong>
+            <span>Standard clinical confidentiality applies, and the few legal exceptions (like risk of harm) are explained before your first session.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="quote-block">
+        <p>"I'd never have gone to therapy at full price. Having someone supervised, but still just for me, made it feel possible."</p>
+        <cite>— A person Harbor Sessions matched last year</cite>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq" class="section-alt">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Questions</span>
+        <h2>Before you reach out</h2>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item open">
+          <button class="faq-q">Is this really free?<span class="plus">+</span></button>
+          <div class="faq-a"><p>Yes, entirely. Harbor Sessions is funded by grants and donations so there's no cost to you, ever, for as many sessions as you need.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">Is a student volunteer qualified to help me?<span class="plus">+</span></button>
+          <div class="faq-a"><p>Volunteers are current graduate students in social work or clinical psychology, and every session is supervised by a licensed mentor who reviews the case from the start.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">What if I need more than talk therapy — like a crisis or medication?<span class="plus">+</span></button>
+          <div class="faq-a"><p>We're not equipped for emergencies or prescribing. Your mentor will help connect you to a licensed provider or crisis line if that's what's needed, and we'll always tell you plainly when that's the case.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">How long does matching take?<span class="plus">+</span></button>
+          <div class="faq-a"><p>Usually under a week. If your situation is time-sensitive, say so on the form and our clinical team will prioritize it.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">Do the hours count for my practicum?<span class="plus">+</span></button>
+          <div class="faq-a"><p>Often, yes — many of our partner programs accept Harbor Sessions hours. Check with your program coordinator, and we're happy to provide documentation.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="final-cta">
+        <h2>Ready when you are</h2>
+        <p>Whether you need someone to talk to or you're ready to be that person for someone else — there's a place for you here.</p>
+        <div class="hero-actions">
+          <a href="#request" class="btn btn-primary">Request a session</a>
+          <a href="#volunteer" class="btn btn-ghost">Volunteer as a student</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">Harbor Sessions</div>
+        <p>Free, supervised counseling from social work and psychology students, mentored by licensed clinicians.</p>
+      </div>
+      <div>
+        <h4>Site</h4>
+        <ul>
+          <li><a href="#how">How it works</a></li>
+          <li><a href="#audiences">Get involved</a></li>
+          <li><a href="#safety">Safety &amp; supervision</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>If it's urgent</h4>
+        <ul>
+          <li>US: call or text 988</li>
+          <li>Or your local emergency number</li>
+          <li>This site is not for emergencies</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Harbor Sessions. A student-volunteer counseling initiative.</span>
+      <span>Privacy · Terms · Contact</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // FAQ accordion
+  document.querySelectorAll('.faq-item').forEach(item => {
+    const q = item.querySelector('.faq-q');
+    const a = item.querySelector('.faq-a');
+    if(item.classList.contains('open')){ a.style.maxHeight = a.scrollHeight + 'px'; }
+    q.addEventListener('click', () => {
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(other => {
+        other.classList.remove('open');
+        other.querySelector('.faq-a').style.maxHeight = 0;
+      });
+      if(!isOpen){
+        item.classList.add('open');
+        a.style.maxHeight = a.scrollHeight + 'px';
+      }
+    });
+  });
+
+  // Mobile nav toggle
+  const toggle = document.querySelector('.nav-toggle');
+  const links = document.querySelector('.nav-links');
+  toggle.addEventListener('click', () => {
+    const visible = links.style.display === 'flex';
+    links.style.display = visible ? 'none' : 'flex';
+    links.style.cssText += visible ? '' : 'flex-direction:column; position:absolute; top:64px; left:0; right:0; background:#F5F7FA; padding:20px 28px; border-bottom:1px solid #DAE2E9;';
+  });
+
+  // Calming wave animation — breathes from irregular to smooth, respects reduced motion
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!prefersReduced){
+    const path = document.getElementById('calmWave');
+    const frames = [
+      "M0,32 C20,8 40,56 60,32 C80,8 100,56 120,32 C150,12 170,52 200,32 C230,18 260,46 290,32 C320,24 350,40 400,32",
+      "M0,32 C20,20 40,44 60,32 C80,20 100,44 120,32 C150,22 170,42 200,32 C230,24 260,40 290,32 C320,26 350,38 400,32",
+      "M0,32 C20,26 40,38 60,32 C80,26 100,38 120,32 C150,28 170,36 200,32 C230,28 260,36 290,32 C320,29 350,35 400,32"
+    ];
+    let i = 0;
+    setInterval(() => {
+      i = (i + 1) % frames.length;
+      path.setAttribute('d', frames[i]);
+    }, 2600);
+    path.style.transition = 'd 2.4s ease-in-out';
+  }
+</script>
+
+</body>
+</html>
